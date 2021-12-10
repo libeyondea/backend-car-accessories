@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +24,15 @@ Route::post('auth/signup', [AuthController::class, 'signup']);
 
 Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 Route::apiResource('categories', CategoryController::class)->only(['index']);
+Route::apiResource('brands', BrandController::class)->only(['index']);
 Route::get('categories/list-categories-with-products', [CategoryController::class, 'listCategoriesWithProducts']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('auth/me', [AuthController::class, 'me']);
     Route::post('auth/signout', [AuthController::class, 'signout']);
 
+    Route::post('checkout', [OrderController::class, 'checkout']);
     Route::post('add-to-cart', [CartController::class, 'addToCart']);
+    Route::delete('delete-cart-item', [CartController::class, 'deleteCartItem']);
     Route::get('carts', [CartController::class, 'index']);
 });

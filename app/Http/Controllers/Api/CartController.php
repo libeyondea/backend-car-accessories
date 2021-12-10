@@ -14,7 +14,8 @@ class CartController extends Controller
 
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->with(['cartproducts.product'])->firstOrFail();
+        $carts = Cart::where('user_id', auth()->user()->id)->with(['cartproducts.product.productimages', 'cartproducts.product.category', 'cartproducts.product.brand'])->first();
+
         return $this->respondSuccess($carts);
     }
 
@@ -48,5 +49,14 @@ class CartController extends Controller
         $cart = $cart->with('cartproducts')->get();
 
         return $this->respondSuccess($cart);
+    }
+
+    public function deleteCartItem(Request $request)
+    {
+        $checkCart = Cart::where('user_id', auth()->user()->id);
+        $cart = $checkCart->firstOrFail();
+        $checkProductCart = CartProduct::where('product_id', $request->product_id)->where('cart_id', $cart->id);
+        $checkProductCart->delete();
+        return $this->respondSuccess('Delete cart item success');
     }
 }
