@@ -23,7 +23,6 @@ class BrandController extends Controller
             ->orderBy('created_at', 'desc')
             ->skip(($page - 1) * $pageSize)->limit($pageSize)
             ->get();
-
         return $this->respondSuccessWithPagination(
             $brands,
             $brandsTotal
