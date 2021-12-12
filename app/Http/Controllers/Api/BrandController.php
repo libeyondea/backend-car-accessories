@@ -15,9 +15,7 @@ class BrandController extends Controller
     {
         $page = request()->get('page', 1);
         $pageSize = request()->get('page_size', 10);
-
         $brandQuery = new Brand;
-
         $brandsTotal = $brandQuery->get()->count();
 
         $brands =
