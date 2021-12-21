@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\ProductController;
@@ -18,6 +24,23 @@ use App\Http\Controllers\Api\OrderController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('admin/auth/signin', [AdminAuthController::class, 'signin']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('admin/auth/me', [AdminAuthController::class, 'me']);
+    Route::post('admin/auth/signout', [AdminAuthController::class, 'signout']);
+
+    Route::apiResource('admin/products', AdminProductController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
+    Route::apiResource('admin/categories', AdminCategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
+    Route::apiResource('admin/brands', AdminBrandController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
+
+
+    Route::apiResource('admin/categories', AdminCategoryController::class)->only(['index']);
+    Route::apiResource('admin/brands', AdminBrandController::class)->only(['index']);
+});
+Route::get('admin/orders', [AdminOrderController::class, 'index']);
+//
 
 Route::post('auth/signin', [AuthController::class, 'signin']);
 Route::post('auth/signup', [AuthController::class, 'signup']);

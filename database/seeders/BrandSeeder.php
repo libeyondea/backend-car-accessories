@@ -16,18 +16,21 @@ class BrandSeeder extends Seeder
     {
         Brand::insert([
             [
+                'id' => 1,
                 'name' => 'Toyota',
                 'slug' => 'toyota ',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
+                'id' => 2,
                 'name' => 'Honda',
                 'slug' => 'honda',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
+                'id' => 3,
                 'name' => 'Hyundai',
                 'slug' => 'hyundai',
                 'created_at' => now(),

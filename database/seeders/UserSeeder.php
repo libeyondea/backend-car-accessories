@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
+            'id' => 1,
             'first_name' => 'Thuc',
             'last_name' => 'Nguyen',
             'avatar' => 'user.png',
@@ -23,7 +24,8 @@ class UserSeeder extends Seeder
             'password' => bcrypt('libeyondea'),
             'phone_number' => '0336077131',
             'address' => 'HCM City',
-            'gender' => 'male'
+            'gender' => 'male',
+            'type' => 'admin'
         ]);
     }
 }
